@@ -42,4 +42,6 @@ public class ImageService {
             return false;
         }
     }
+
+    // add more methods when necessary
 }

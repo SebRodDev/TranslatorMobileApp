@@ -47,4 +47,24 @@ public class UserService {
             return Optional.empty();
         }
     }
+
+    public User changeUserInfo(Long originalId, User newUserInformation) {
+        if ((newUserInformation.getUsername() == null) || (newUserInformation.getPassword() == null)) {
+            return null;
+        }
+
+        try {
+            Optional<User> foundUserOptional = userRepository.findById(originalId);
+            if (!(foundUserOptional.isEmpty())) {
+                User foundUser = foundUserOptional.get();
+                foundUser.setUsername(newUserInformation.getUsername());
+                foundUser.setPassword(newUserInformation.getPassword());
+                return userRepository.save(foundUser);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to find a user with the id: " + originalId);
+        }
+
+        return null;
+    }
 }
